@@ -1,0 +1,44 @@
+SBGEODE 1.0 for DOS
+AMD Geode LX / CS5536 AC'97
+
+MS-DOS 6.22 is the primary platform. Operation has also been confirmed
+on FreeDOS and MS-DOS 7.1.
+
+QUICK START
+
+Extract SBGEODE.EXE to a directory on the DOS path. For real-mode
+programs, load JemmEx in CONFIG.SYS, or load an XMS manager followed by
+Jemm386. The verified MS-DOS 6.22 setup used JemmEx 5.87. Have JLOAD,
+QPIEMU.DLL and HDPMI32I.EXE available, then run the following at the DOS
+prompt with QPIEMU.DLL in the current directory or give its full path.
+
+  JLOAD.EXE QPIEMU.DLL
+  HDPMI32I.EXE -r -x
+  SET BLASTER=A220 I5 D1 H5 T6
+  SBGEODE.EXE /T=6
+
+Select Sound Blaster 16, port 220h, IRQ 5, DMA 1 and high DMA 5 in the
+application. Select AdLib at 388h for FM music. For software General
+MIDI, supply a SoundFont 2 bank and install the driver with, for example,
+
+  SBGEODE.EXE /T=6 /VMPU=1 /VMSF=C:\MIDI\BANK.SF2
+
+Select General MIDI at port 330h in the application. /VMPU=1 allows
+64 simultaneous voices.
+
+TROUBLESHOOTING
+
+Start with the default XMS policy. Speech and effects can play directly
+from XMS when their buffers fit below 16 MiB. If music plays but voices
+or effects are missing, verify the digital device, IRQ and DMA first.
+If they match, reboot DOS and install with SBGEODE.EXE /T=6 /XMSLOW.
+This can reduce the memory available to other legacy XMS clients.
+
+If a DOS extender chooses VCPI ahead of DPMI, install HDPMI32i and
+try SBGEODE.EXE /T=6 /NOVCPI. This requires a DPMI-capable extender.
+
+Use SBGEODE.EXE /? for command-line help. Running SBGEODE.EXE with no
+arguments after installation reports the resident settings.
+
+The full user guide and hardware results are in README.MD.
+Project: https://github.com/OrdinaryLunatic/SBGEODE
